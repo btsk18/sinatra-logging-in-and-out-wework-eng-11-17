@@ -20,7 +20,7 @@ class ApplicationController < Sinatra::Base
 
   get '/account' do
     binding.pry
-    erb :error if !session.keys.includ?("user_id")
+    erb :error if !session.keys.include?("user_id")
     @user = User.find(session[:user_id])
     erb :account
   end
