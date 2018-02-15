@@ -1,4 +1,5 @@
 require_relative '../../config/environment'
+require 'pry'
 class ApplicationController < Sinatra::Base
   configure do
     set :views, Proc.new { File.join(root, "../views/") }
@@ -11,11 +12,14 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/login' do
-
+    @user = User.find_by(username: params[:username])
+    session[:user_id] = @user.id
+    redirect '/account'
   end
 
   get '/account' do
-
+    @user = User.find(session[:user_id])
+    erb :account
   end
 
   get '/logout' do
@@ -24,4 +28,3 @@ class ApplicationController < Sinatra::Base
 
 
 end
-
